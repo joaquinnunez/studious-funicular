@@ -13,11 +13,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from world.views import continents, regions, countries
+from world.views import countries, cities
 from django.urls import path
 
 urlpatterns = [
-    path('continents', continents),
-    path('regions/<str:continent>', regions),
-    path('countries/<str:region>', countries),
+    path('countries', countries),
+    path('cities/<str:country_code>', cities),
 ]

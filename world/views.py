@@ -1,18 +1,12 @@
 from django.http import JsonResponse
-from world.models import Country 
+from world.models import Country, City
+from django.forms.models import model_to_dict
 import logging
 
-def continents(request):
-    # TODO: sort
-    continents = [country.continent for country in Country.objects.distinct('continent')]
-    return JsonResponse({'continents': continents})
+def countries(request):
+  countries = [model_to_dict(country) for country in Country.objects.all()]
+  return JsonResponse({'countries': countries})
 
-def regions(request, continent):
-    # TODO: sort
-    regions = [country.region for country in Country.objects.distinct('region').filter(continent=continent)]
-    return JsonResponse({'regions': regions})
-
-def countries(request, region):
-    # TODO: sort
-    countries = [country.name for country in Country.objects.filter(region=region)]
-    return JsonResponse({'countries': countries})
+def cities(request, country_code):
+  cities = [model_to_dict(city) for city in City.objects.filter(countrycode=country_code)]
+  return JsonResponse({'cities': cities})
