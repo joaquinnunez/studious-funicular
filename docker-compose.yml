@@ -5,7 +5,7 @@ services:
     image: postgres
     environment:
       POSTGRES_PASSWORD: example
-  web:
+  api:
     build: .
     command: ["/code/wait-for-it.sh", "db:5432", "--", "python", "manage.py", "runserver", "0.0.0.0:8000"]
     volumes:
@@ -14,3 +14,10 @@ services:
       - "8000:8000"
     depends_on:
       - db
+  web:
+    build: web
+    entrypoint: sh entrypoint.sh
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./web:/home/node
