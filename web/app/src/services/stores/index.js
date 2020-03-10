@@ -2,7 +2,6 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 
 export default (rootReducer, rootSaga) => {
-  /* ------------- Redux Configuration ------------- */
   const middleware = []
   const enhancers = []
   const sagaMiddleware = createSagaMiddleware()

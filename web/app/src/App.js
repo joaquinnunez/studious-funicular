@@ -94,7 +94,7 @@ class App extends React.Component {
   country() {
     if (this.state.selectedCountry !== false) {
       const countryData = this.state.selectedCountry
-      return <Country data={countryData} cities={this.props.world.cities}/>
+      return <Country data={countryData} cities={this.props.world.cities} languages={this.props.world.languages}/>
     }
     return null
   }
@@ -119,7 +119,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  console.log(state)
   const props = {
     world: state.world
   }

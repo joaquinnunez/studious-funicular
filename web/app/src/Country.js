@@ -23,6 +23,7 @@ class Country extends React.Component {
     const data = this.props.data
     return (
       <React.Fragment>
+        <h2>{data.name}</h2>
         <table className="table">
           <tbody>
           {Object.keys(data).
@@ -30,6 +31,7 @@ class Country extends React.Component {
           }
           </tbody>
         </table>
+        <h2>Cities of {data.name}</h2>
         <table className="table">
           <thead>
             <tr>
@@ -40,10 +42,28 @@ class Country extends React.Component {
           </thead>
           <tbody>
           {this.props.cities.map(city => <tr key={city.id}>
-                                           <td>{city.name} {city.id == data.capital && '*'}</td>
+                                           <td>{city.name} {city.id === data.capital && '*'}</td>
                                            <td>{city.district}</td>
                                            <td>{city.population}</td>
                                          </tr>)
+          }
+          </tbody>
+        </table>
+        <h2>Languages of {data.name}</h2>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Language</th>
+              <th>Is official</th>
+              <th>Percentage</th>
+            </tr>
+          </thead>
+          <tbody>
+          {this.props.languages.map(lang => <tr key={lang.id}>
+                                              <td>{lang.language}</td>
+                                              <td>{lang.isofficial}</td>
+                                              <td>{lang.percentage}</td>
+                                            </tr>)
           }
           </tbody>
         </table>

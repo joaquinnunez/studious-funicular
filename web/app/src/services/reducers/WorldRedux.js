@@ -13,11 +13,13 @@ export default Creators
 
 export const INITIAL_STATE = Immutable({
   continents: {},
-  cities: []
+  cities: [],
+  languages: []
+
 })
 
 export const fetch = (state) => state
-export const fetchCities = (state) => state.merge({cities: []})
+export const fetchCities = (state) => state.merge({cities: [], languages: []})
 
 export const fetchOk = (state, action) => {
   // {
@@ -41,7 +43,7 @@ export const fetchOk = (state, action) => {
   return state.merge({ continents: data })
 }
 
-export const fetchCitiesOk = (state, action) => state.merge({ cities: action.worldData.cities })
+export const fetchCitiesOk = (state, action) => state.merge({ cities: action.worldData.cities, languages: action.worldData.languages })
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH]: fetch,
