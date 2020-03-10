@@ -13,9 +13,11 @@ const create = () => {
   })
 
   const fetch = () => api.get(`/countries`)
+  const fetchCities = (countryCode) => api.get(`/cities/${countryCode}`)
 
   return {
-    fetch
+    fetch,
+    fetchCities
   }
 }
 

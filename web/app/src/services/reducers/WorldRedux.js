@@ -3,7 +3,9 @@ import Immutable from 'seamless-immutable'
 
 const { Types, Creators } = createActions({
   fetch: [],
-  fetchOk: ['worldData']
+  fetchOk: ['worldData'],
+  fetchCities: ['countryCode'],
+  fetchCitiesOk: ['worldData']
 })
 
 export const WorldTypes = Types
@@ -11,9 +13,11 @@ export default Creators
 
 export const INITIAL_STATE = Immutable({
   continents: {},
+  cities: []
 })
 
 export const fetch = (state) => state
+export const fetchCities = (state) => state.merge({cities: []})
 
 export const fetchOk = (state, action) => {
   // {
@@ -37,7 +41,11 @@ export const fetchOk = (state, action) => {
   return state.merge({ continents: data })
 }
 
+export const fetchCitiesOk = (state, action) => state.merge({ cities: action.worldData.cities })
+
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH]: fetch,
-  [Types.FETCH_OK]: fetchOk
+  [Types.FETCH_OK]: fetchOk,
+  [Types.FETCH_CITIES]: fetchCities,
+  [Types.FETCH_CITIES_OK]: fetchCitiesOk
 })

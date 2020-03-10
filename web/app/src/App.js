@@ -16,6 +16,7 @@ class App extends React.Component {
       selectedCountry: false,
     }
   }
+  classNames = 'list-group-item list-group-item-action'
 
   componentDidMount() {
     this.props.fetch()
@@ -26,7 +27,10 @@ class App extends React.Component {
               <h2>Continents</h2>
               <ul className="list-group">
                 {Object.keys(this.props.world.continents).
-                        map(c => <li onClick={() => this.selectContinent(c)} key={c} className="list-group-item">{c}</li>)
+                        map(c => <li onClick={() => this.selectContinent(c)}
+                                     key={c}
+                                     className={this.state.selectedContinent !== c ? this.classNames : this.classNames+' active'}
+                                 >{c}</li>)
                 }
               </ul>
             </React.Fragment>
@@ -46,7 +50,10 @@ class App extends React.Component {
                 <h2>Regions</h2>
                 <ul className="list-group">
                   {Object.keys(this.props.world.continents[this.state.selectedContinent]).
-                          map(c => <li onClick={() => this.selectRegion(c)} key={c} className="list-group-item">{c}</li>)
+                          map(c => <li onClick={() => this.selectRegion(c)}
+                                       key={c}
+                                       className={this.state.selectedRegion !== c ? this.classNames : this.classNames+' active'}
+                                   >{c}</li>)
                   }
                 </ul>
               </React.Fragment>
@@ -67,7 +74,10 @@ class App extends React.Component {
                 <h2>Countries</h2>
                 <ul className="list-group">
                   {this.props.world.continents[this.state.selectedContinent][this.state.selectedRegion].
-                        map(c => <li onClick={() => this.selectCountry(c)} key={c.name} className="list-group-item">{c.name}</li>)
+                        map(c => <li onClick={() => this.selectCountry(c)}
+                                     key={c.name}
+                                     className={this.state.selectedCountry.name !== c.name ? this.classNames : this.classNames+' active'}
+                                 >{c.name}</li>)
                   }
                 </ul>
               </React.Fragment>
@@ -78,12 +88,13 @@ class App extends React.Component {
 
   selectCountry(country) {
     this.setState({selectedCountry: country})
+    this.props.fetchCities(country.code)
   }
 
   country() {
     if (this.state.selectedCountry !== false) {
       const countryData = this.state.selectedCountry
-      return <Country data={countryData}/>
+      return <Country data={countryData} cities={this.props.world.cities}/>
     }
     return null
   }
@@ -102,7 +113,8 @@ class App extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetch: () => dispatch(WorldActions.fetch())
+    fetch: () => dispatch(WorldActions.fetch()),
+    fetchCities: (countryCode) => dispatch(WorldActions.fetchCities(countryCode))
   }
 }
 
